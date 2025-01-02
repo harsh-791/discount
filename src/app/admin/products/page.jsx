@@ -1,7 +1,7 @@
 export default function Page() {
     return (
-        <main className="p-10">
-            <h1>Admin Panel</h1>
+        <main>
+            <h1>Admin Products</h1>
         </main>
     )
-} 
+}
