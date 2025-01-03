@@ -1,14 +1,44 @@
-'use client';
+'use client'
 
-import Sidebar from "./components/Sidebar";
+import AuthContextProvider, { useAuth } from "@/contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import AdminLayout from "./components/AdminLayout";
+import { CircularProgress } from "@nextui-org/react";
 
-export default  function Layout({ children }) {
+export default function Layout({ children }) {
+  return (
+    <AuthContextProvider>
+      <AdminChecking>{children}</AdminChecking>
+    </AuthContextProvider>
+  );
+}
+
+function AdminChecking({ children }) {
+  const { user, isLoading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user && !isLoading) {
+      router.push("/login");
+    }
+  },[user, isLoading]);
+
+  if(isLoading){
     return (
-        <main className="flex">
-            <Sidebar />
-            <section>
-                {children}
-            </section>
-        </main>
+      <div className="h-screen w-screen flex justify-center items-center">
+        <CircularProgress />
+      </div>
     )
+  }
+
+  if(!user) {
+    return (
+      <div className="h-screen w-screen flex justify-center items-center">
+        <h1>Please Login!!!</h1>
+      </div>
+    );
+  }
+
+  return <AdminLayout>{children}</AdminLayout>
 }

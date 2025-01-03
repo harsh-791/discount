@@ -22,7 +22,7 @@ export const Header = () => {
         <img className="h-9" src="/logo.png" alt="logo" />
         <div className=" flex gap-4 items-center font-semibold">
             {menuList.map((item) => (
-                <Link href={item?.link}>
+                <Link key={item?.name} href={item?.link}>
                     <button>{item?.name}</button>
                 </Link>
             ))}
