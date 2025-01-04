@@ -1,12 +1,15 @@
 'use client';
 
+import { createNewCategory } from "@/lib/firestore/categories/write";
 import { Button } from "@nextui-org/react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Form() {
 
     const [data, setData] = useState(null);
     const [image, setImage] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleData = (key,value) => {
         setData((preData) => {
@@ -18,7 +21,16 @@ export default function Form() {
     }
 
     const handleCreate = async() => {
-      
+      setIsLoading(true);
+      try {
+        await createNewCategory({data, image});
+        toast.success('Successfully created');
+        setData(null);
+        setImage(null);
+      } catch (error) {
+        toast.error(error?.message);
+      }
+      setIsLoading(false);
     }
 
     return (
@@ -100,7 +112,7 @@ export default function Form() {
               required
             />
           </div>
-          <Button type="submit">Create</Button>
+          <Button isLoading={isLoading} isDisabled={isLoading} type="submit">Create</Button>
         </form>
       </div>
     );
