@@ -1,8 +1,10 @@
 'use client';
 
-import { createNewCategory } from "@/lib/firestore/categories/write";
+import { getCategory } from "@/lib/firestore/categories/read_server";
+import { createNewCategory, updateCategory } from "@/lib/firestore/categories/write";
 import { Button } from "@nextui-org/react";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function Form() {
@@ -10,6 +12,30 @@ export default function Form() {
     const [data, setData] = useState(null);
     const [image, setImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    const router = useRouter();
+
+    const searchParams = useSearchParams();
+    const id = searchParams.get('id');
+
+    const fetchData = async() => {
+      try {
+        const res = await getCategory({id : id})
+        if(!res) {
+          toast.error('Category not found!!');
+        } else {
+          setData(res);
+        }
+      } catch (error) {
+        toast.error(error?.message);
+      }
+    }
+
+    useEffect(() => {
+      if(id) {
+        fetchData();
+      }
+    }, [id])
 
     const handleData = (key,value) => {
         setData((preData) => {
@@ -23,7 +49,7 @@ export default function Form() {
     const handleCreate = async() => {
       setIsLoading(true);
       try {
-        await createNewCategory({data, image});
+        await createNewCategory({data: data, image: image});
         toast.success('Successfully created');
         setData(null);
         setImage(null);
@@ -33,13 +59,32 @@ export default function Form() {
       setIsLoading(false);
     }
 
+    const handleUpdate = async () => {
+      // console.log("data", data);
+      setIsLoading(true);
+      try {
+        await updateCategory({ data: data, image: image });
+        toast.success("Successfully Updated");
+        setData(null);
+        setImage(null);
+        router.push('/admin/categories');
+      } catch (error) {
+        toast.error(error?.message);
+      }
+      setIsLoading(false);
+    };
+
     return (
       <div className="flex flex-col gap-3bg-white rounded-xl p-5 w-full md:w-[400px]">
-        <h1 className="font-semibold">Create Category</h1>
+        <h1 className="font-semibold">{id ? 'Update' : 'Create'} Category</h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleCreate();
+            if(id) {
+              handleUpdate();
+            } else {
+              handleCreate();
+            }
           }}
           className="flex flex-col gap-3"
         >
@@ -62,7 +107,6 @@ export default function Form() {
               name="category-image"
               type="file"
               className="border px-4 py-2 rounded-lg w-full focus:outline-none"
-              required
             />
           </div>
           {/* <div className="flex flex-col gap-1">
@@ -75,7 +119,6 @@ export default function Form() {
               type="file"
               accept="video/*"
               className="border px-4 py-2 rounded-lg w-full focus:outline-none"
-              required
             />
           </div> */}
           <div className="flex flex-col gap-1">
@@ -112,7 +155,7 @@ export default function Form() {
               required
             />
           </div>
-          <Button isLoading={isLoading} isDisabled={isLoading} type="submit">Create</Button>
+          <Button isLoading={isLoading} isDisabled={isLoading} type="submit">{id ? 'Update' : 'Create'}</Button>
         </form>
       </div>
     );

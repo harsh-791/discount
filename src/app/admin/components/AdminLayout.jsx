@@ -10,21 +10,23 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
   const sidebarRef = useRef(null);
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
 
   useEffect(() => {
     toggleSidebar();
   }, [pathname]);
 
   useEffect(() => {
-    function handleClickOutside(event) {
+    function handleClickOutsideEvent(event) {
       if (sidebarRef?.current && !sidebarRef?.current.contains(event.target)) {
         setIsOpen(false);
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutsideEvent);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutsideEvent);
     };
   }, []);
 
