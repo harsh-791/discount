@@ -6,12 +6,12 @@ import Images from "./components/Images";
 import Description from "./components/Description";
 import { Button } from "@nextui-org/react";
 import toast from "react-hot-toast";
-import {
-  createNewProduct,
-  updateProduct,
-} from "@/lib/firestore/products/write";
+// import {
+//   createNewProduct,
+//   updateProduct,
+// } from "@/lib/firestore/products/write";
 import { useRouter, useSearchParams } from "next/navigation";
-import { getProduct } from "@/lib/firestore/products/read_server";
+// import { getProduct } from "@/lib/firestore/products/read_server";
 
 export default function Page() {
   const [data, setData] = useState(null);
