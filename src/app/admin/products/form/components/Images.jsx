@@ -64,6 +64,7 @@ export default function Images({
             {imageList?.map((item) => {
               return (
                 <img
+                  key={item?.name}
                   className="w-20 object-cover rounded-lg"
                   src={URL.createObjectURL(item)}
                   alt=""

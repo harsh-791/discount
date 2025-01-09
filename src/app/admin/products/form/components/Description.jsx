@@ -16,7 +16,7 @@ const modules = {
     "strikeThrough",
     "formatOL",
     "formatUL",
-    "link", // Link button
+    "Link", // Link button
     "color", // Color button
     "clear",
   ],
