@@ -133,7 +133,7 @@ export default function Form() {
               id="brand-name"
               name="brand-name"
               type="text"
-              placeholder="Brand Name"
+              placeholder="Enter Name"
               value={data?.name ?? ""}
               onChange={(e) => {
                 handleData("name", e.target.value);
@@ -142,7 +142,7 @@ export default function Form() {
               required
             />
           </div>
-          
+
           <Button isLoading={isLoading} isDisabled={isLoading} type="submit">
             {id ? "Update" : "Create"}
           </Button>

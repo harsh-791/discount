@@ -133,7 +133,7 @@ export default function Form() {
               id="admin-name"
               name="admin-name"
               type="text"
-              placeholder="admin Name"
+              placeholder="Enter Name"
               value={data?.name ?? ""}
               onChange={(e) => {
                 handleData("name", e.target.value);

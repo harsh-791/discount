@@ -76,11 +76,11 @@ export default function Form() {
 
     return (
       <div className="flex flex-col gap-3bg-white rounded-xl p-5 w-full md:w-[400px]">
-        <h1 className="font-semibold">{id ? 'Update' : 'Create'} Category</h1>
+        <h1 className="font-semibold">{id ? "Update" : "Create"} Category</h1>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if(id) {
+            if (id) {
               handleUpdate();
             } else {
               handleCreate();
@@ -94,7 +94,11 @@ export default function Form() {
             </label>
             {image && (
               <div className="flex justify-center items-center p-3">
-                <img className='h-20' src={URL.createObjectURL(image)} alt="category image" />
+                <img
+                  className="h-20"
+                  src={URL.createObjectURL(image)}
+                  alt="category image"
+                />
               </div>
             )}
             <input
@@ -129,7 +133,7 @@ export default function Form() {
               id="category-name"
               name="category-name"
               type="text"
-              placeholder="Category Name"
+              placeholder="Enter Name"
               value={data?.name ?? ""}
               onChange={(e) => {
                 handleData("name", e.target.value);
@@ -146,7 +150,7 @@ export default function Form() {
               id="category-slug"
               name="category-slug"
               type="text"
-              placeholder="Category slug"
+              placeholder="Enter Slug"
               value={data?.slug ?? ""}
               onChange={(e) => {
                 handleData("slug", e.target.value);
@@ -155,7 +159,9 @@ export default function Form() {
               required
             />
           </div>
-          <Button isLoading={isLoading} isDisabled={isLoading} type="submit">{id ? 'Update' : 'Create'}</Button>
+          <Button isLoading={isLoading} isDisabled={isLoading} type="submit">
+            {id ? "Update" : "Create"}
+          </Button>
         </form>
       </div>
     );
