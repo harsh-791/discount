@@ -96,10 +96,21 @@ export default function Form() {
               Image <span className="text-red-500">*</span>{" "}
             </label>
             {image && (
+              <div className="flex justify-center items-center p-3 ">
+                <img
+                  className="h-20 rounded-lg"
+                  src={URL.createObjectURL(image)}
+                  alt="collection image"
+                />
+              </div>
+            )}
+            {/* this code below is for update that if image is already there then it
+            will show the image */}
+            {data?.imageURL && !image && (
               <div className="flex justify-center items-center p-3">
                 <img
-                  className="h-20"
-                  src={URL.createObjectURL(image)}
+                  className="h-20 rounded-lg"
+                  src={data?.imageURL}
                   alt="collection image"
                 />
               </div>
@@ -134,7 +145,10 @@ export default function Form() {
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="collection-sub-title" className="text-gray-500 text-sm">
+            <label
+              htmlFor="collection-sub-title"
+              className="text-gray-500 text-sm"
+            >
               Sub Title <span className="text-red-500">*</span>{" "}
             </label>
             <input
@@ -151,13 +165,22 @@ export default function Form() {
             />
           </div>
           <div className="flex flex-wrap gap-3">
-              {data?.products?.map((productId) => {
-                return <ProductCard key={productId} productId={productId} setData={setData} />
-              })}
-              {/* <h1>YAHA DEKHO</h1> */}
+            {data?.products?.map((productId) => {
+              return (
+                <ProductCard
+                  key={productId}
+                  productId={productId}
+                  setData={setData}
+                />
+              );
+            })}
+            {/* <h1>YAHA DEKHO</h1> */}
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="collection-sub-title" className="text-gray-500 text-sm">
+            <label
+              htmlFor="collection-sub-title"
+              className="text-gray-500 text-sm"
+            >
               Select Product <span className="text-red-500">*</span>{" "}
             </label>
             <select
@@ -172,13 +195,21 @@ export default function Form() {
                     ...prevData,
                     products: list,
                   };
-                })
+                });
               }}
               className="border px-4 py-2 rounded-lg w-full focus:outline-none"
             >
               <option value="">Select Product</option>
               {products?.map((item) => {
-                return (<option disabled={data?.products?.includes(item?.id)} value={item?.id} key={item?.id}>{item?.title}</option>)
+                return (
+                  <option
+                    disabled={data?.products?.includes(item?.id)}
+                    value={item?.id}
+                    key={item?.id}
+                  >
+                    {item?.title}
+                  </option>
+                );
               })}
             </select>
           </div>

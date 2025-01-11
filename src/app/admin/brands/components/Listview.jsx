@@ -85,7 +85,7 @@ function Row({item, index}) {
         <td className="border-y bg-white px-3 py-2 text-center">
           <div className="flex justify-center">
             <img
-              className="w-10 h-10 object-cover"
+              className="h-7 object-cover"
               src={item?.imageURL}
               alt="Logo"
             />
