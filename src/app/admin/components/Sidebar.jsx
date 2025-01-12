@@ -60,7 +60,9 @@ export default function Sidebar() {
     return (
       <section className="sticky top-0 flex flex-col gap-10 justify-between bg-white border-r px-5 py-3 h-screen overflow-hidden w-[260px] ">
         <div className="flex justify-center py-4">
-          <img className="h-8" src="/logo.png" alt="Logo" />
+          <Link href={`/`}>
+            <img className="h-8" src="/logo.png" alt="Logo" />
+          </Link>
         </div>
         <ul className="flex flex-1 h-full overflow-y-auto flex-col gap-4">
           {/* TODO: tailwind scrollbar design */}
@@ -69,19 +71,20 @@ export default function Sidebar() {
           ))}
         </ul>
         <div className="flex justify-center">
-          <button 
-            onClick={async() => {
-              try{
+          <button
+            onClick={async () => {
+              try {
                 await toast.promise(signOut(auth), {
                   error: (e) => e?.message,
                   loading: "Logging out...",
                   success: "Logged out successfully!",
-                })
-              } catch(error){
+                });
+              } catch (error) {
                 toast.error(error?.message);
               }
             }}
-            className="flex gap-2 items-center px-3 py-2 hover:bg-indigo-100 rounded-xl w-full justify-center ease-soft-spring duration-400 transition-all">
+            className="flex gap-2 items-center px-3 py-2 hover:bg-indigo-100 rounded-xl w-full justify-center ease-soft-spring duration-400 transition-all"
+          >
             <LogOut className="h-5 w-5" />
             Logout
           </button>

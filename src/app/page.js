@@ -1,10 +1,14 @@
+import { getFeaturedProducts } from "@/lib/firestore/products/read_server";
 import { Header } from "./components/Header";
-import Image from "next/image";
+import FeaturedProductSlider from "./components/Sliders";
 
-export default function Home() {
+export default async function Home() {
+  const featuredProducts = await getFeaturedProducts();
+
   return (
     <main>
       <Header />
+      <FeaturedProductSlider featuredProducts={featuredProducts} />
     </main>
   );
 }
