@@ -13,7 +13,7 @@ export default function FeaturedProductSlider({ featuredProducts }) {
     slidesToScroll: 1,
   };
   return (
-    <div className="w-screen overflow-hidden">
+    <div className="overflow-hidden">
       <Slider {...settings}>
         {featuredProducts.map((product) => {
           // {

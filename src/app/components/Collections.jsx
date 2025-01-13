@@ -17,7 +17,7 @@ export default function Collections({ collections }) {
   }
 
   return (
-    <div className="w-screen overflow-hidden p-10">
+    <div className="overflow-hidden p-10">
       <Slider {...settings}>
         {(collections?.length <= 2
           ? [...collections, ...collections, ...collections]
