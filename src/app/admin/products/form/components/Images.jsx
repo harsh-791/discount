@@ -12,16 +12,16 @@ export default function Images({
         {data?.featureImageURL && !featureImage && (
           <div className="flex justify-center">
             <img
-              className="h-20 object-cover rounded-lg"
+              className="h-20 object-cover rounded-lg "
               src={data?.featureImageURL}
               alt=""
             />
           </div>
         )}
         {featureImage && (
-          <div className="flex justify-center">
+          <div className="flex justify-center ">
             <img
-              className="h-20 object-cover rounded-lg"
+              className="h-20 object-cover rounded-lg "
               src={URL.createObjectURL(featureImage)}
               alt=""
             />

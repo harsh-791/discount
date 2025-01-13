@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from "@nextui-org/react";
+import { Heart } from "lucide-react";
 import Slider from "react-slick";
 
 export default function FeaturedProductSlider({ featuredProducts }) {
@@ -11,26 +13,44 @@ export default function FeaturedProductSlider({ featuredProducts }) {
     slidesToScroll: 1,
   };
   return (
-    <Slider {...settings}>
+    <div className="w-screen overflow-hidden">
+      <Slider {...settings}>
         {featuredProducts.map((product) => {
-          {
-            console.log(product);
-          }
+          // {
+          //   console.log(product);
+          // }
           return (
             <div>
               <div
                 key={product?.id}
-                className="flex gap-4 bg-[#f8f8f8] p-10 md:p-20 w-full"
+                className="flex gap-4 bg-[#f8f8f8] p-10 md:px-24 md:py-20 w-full"
               >
-                <div className="flex-1 flex flex-col gap-5">
-                  <h1 className="text-4xl font-semibold">{product?.title}</h1>
-                  <h1 className="text-gray-600 text-sm max-w-96 line-clamp-2">
-                    {product?.shortDescription}
-                  </h1>
+                <div className="flex-1 flex flex-col gap-10">
+                  <h2 className="text-gray-500">NEW PRODUCT</h2>
+                  <div className="flex flex-col gap-4">
+                    <h1 className="text-4xl font-semibold">{product?.title}</h1>
+                    <h1 className="text-gray-600 text-sm max-w-96 line-clamp-2">
+                      {product?.shortDescription}
+                    </h1>
+                  </div>
+                  <div className="flex gap-4">
+                    <Button className="bg-blue-500 text-white text-sm ">
+                      BUY NOW
+                    </Button>
+                    <Button className="border-2 border-blue-500 bg-white text-blue-500 text-sm ">
+                      ADD TO CART
+                    </Button>
+                    <Button
+                      isIconOnly
+                      className="border-2 border-pink-500 bg-white text-pink-500 "
+                    >
+                      <Heart size={14} />
+                    </Button>
+                  </div>
                 </div>
                 <div>
                   <img
-                    className="h-[20rem]"
+                    className="h-[20rem] "
                     src={product?.featureImageURL}
                     alt="Featured Product"
                   />
@@ -39,6 +59,7 @@ export default function FeaturedProductSlider({ featuredProducts }) {
             </div>
           );
         })}
-    </Slider>
+      </Slider>
+    </div>
   );
 }

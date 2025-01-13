@@ -20,7 +20,9 @@ export const getFeaturedProducts = async () => {
     return {
       ...data,
       timestampCreate: data.timestampCreate.toDate().toISOString(), // Convert to ISO string
-      timestampUpdate: data.timestampUpdate.toDate().toISOString(), // Convert to ISO string
+      timestampUpdate: data.timestampUpdate
+        ? data.timestampUpdate.toDate().toISOString()
+        : null, // Convert to ISO string if exists
     };
   });
 };
