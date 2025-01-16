@@ -6,6 +6,7 @@ import { getCollections } from "@/lib/firestore/collections/read_server";
 import Categories from "./components/Categories";
 import { getCategories } from "@/lib/firestore/categories/read_server";
 import ProductsGridView from "./components/Products";
+import CustomerReviews from "./components/CustomReviews";
 
 export default async function Home() {
   const featuredProducts = await getFeaturedProducts();
@@ -20,6 +21,7 @@ export default async function Home() {
       <Collections collections={collections} />
       <Categories categories={categories} />
       <ProductsGridView products={products} />
+      <CustomerReviews />
     </main>
   );
 }
