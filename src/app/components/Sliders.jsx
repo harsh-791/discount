@@ -20,7 +20,7 @@ export default function FeaturedProductSlider({ featuredProducts }) {
           //   console.log(product);
           // }
           return (
-            <div>
+            <div key={product?.id}>
               <div
                 key={product?.id}
                 className="flex flex-col-reverse md:flex-row gap-4 bg-[#f8f8f8] p-5 md:px-24 md:py-20 w-full"

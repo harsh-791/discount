@@ -55,7 +55,7 @@ export default function Collections({ collections }) {
           //   console.log(collection);
           // }
           return (
-            <div className="px-2">
+            <div className="px-2" key={collection?.id}>
               <div
                 className="flex gap-4 bg-gradient-to-tr to-[#d9e2f1] from-[#cce7f5] p-7 w-full rounded-xl h-full"
                 key={collection?.id}
