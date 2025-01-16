@@ -11,11 +11,18 @@ import { getBrands } from "@/lib/firestore/brands/read_server";
 import Brands from "./components/Brands";
 
 export default async function Home() {
-  const featuredProducts = await getFeaturedProducts();
-  const collections = await getCollections();
-  const categories = await getCategories();
-  const products = await getProducts();
-  const brands = await getBrands();
+  const[featuredProducts, collections, categories, products, brands] = await Promise.all([
+    getFeaturedProducts(),
+    getCollections(),
+    getCategories(),
+    getProducts(),
+    getBrands(),
+  ]) //This fetches all the data at once in parallel and waits for all of them to be fetched before rendering the page
+  // const featuredProducts = await getFeaturedProducts();
+  // const collections = await getCollections();
+  // const categories = await getCategories();
+  // const products = await getProducts();
+  // const brands = await getBrands();
 
   return (
     <main className="w-screen h-screen overflow-x-hidden overflow-y-auto">
