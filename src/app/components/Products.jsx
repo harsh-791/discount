@@ -1,6 +1,7 @@
 import { Rating } from "@mui/material";
 import { Button } from "@nextui-org/react";
 import { Heart, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
 export default function ProductsGridView({ products }) {
     return (
@@ -27,28 +28,40 @@ function ProductCard({ product }) {
             alt={product?.title}
           />
           <div className="absolute top-2 right-2">
-            <Button 
-                variant="light"
-                color="danger"
-                className="rounded-full"
-                isIconOnly 
-                size="sm"
+            <Button
+              variant="light"
+              color="danger"
+              className="rounded-full"
+              isIconOnly
+              size="sm"
             >
               <Heart size={13} />
             </Button>
           </div>
         </div>
-        <h1 className="font-semibold line-clamp-2 text-sm">{product?.title}</h1>
+        <Link href={`/products/${product?.id}`}>
+          <h1 className="font-semibold line-clamp-2 text-sm">
+            {product?.title}
+          </h1>
+        </Link>
+        <div className="">
+          <h2 className="text-green-500 text-sm font-semibold">
+            ₹ {product?.salePrice}{" "}
+            <span className="line-through text-xs text-gray-600">
+              ₹ {product?.price}
+            </span>
+          </h2>
+        </div>
         <p className="text-xs text-gray-500 line-clamp-2">
           {product?.shortDescription}
         </p>
         <div className="flex gap-3 items-center">
-          <Rating 
-            size='small' 
-            name="product-rating" 
-            defaultValue={2.5} 
+          <Rating
+            size="small"
+            name="product-rating"
+            defaultValue={2.5}
             precision={0.5}
-            readOnly 
+            readOnly
           />
           <h1 className="text-xs text-gray-400">(0)</h1>
         </div>
