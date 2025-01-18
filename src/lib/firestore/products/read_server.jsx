@@ -42,3 +42,19 @@ export const getProducts = async () => {
     };
   });
 };
+
+export const getProductsByCategory = async ({ categoryId }) => {
+  const list = await getDocs(
+    query(collection(db, "products"), orderBy("timestampCreate", "desc"), where("categoryId", "==", categoryId))
+  );
+  return list.docs.map((snap) => {
+    const data = snap.data();
+    return {
+      ...data,
+      timestampCreate: data.timestampCreate.toDate().toISOString(), // Convert to ISO string
+      timestampUpdate: data.timestampUpdate
+        ? data.timestampUpdate.toDate().toISOString()
+        : null, // Convert to ISO string if exists
+    };
+  });
+};

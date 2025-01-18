@@ -2,6 +2,7 @@ import { getBrand } from "@/lib/firestore/brands/read_server";
 import { getCategory } from "@/lib/firestore/categories/read_server";
 import { Button } from "@nextui-org/react";
 import { Heart } from "lucide-react";
+import Link from "next/link";
 
 export default function Details({product}) {
   return (
@@ -31,6 +32,12 @@ export default function Details({product}) {
             <Heart size={13} />
         </Button>
       </div>
+      <div className="flex flex-col gap-2 py-6">
+        <h2 className="text-sm font-semibold">Description</h2>
+        <div
+          className="text-gray-600" 
+          dangerouslySetInnerHTML={{ __html: product?.description ?? "" }}></div>
+      </div>
     </div>
   );
 }
@@ -39,11 +46,14 @@ async function Category({categoryId}) {
     const category = await getCategory({id: categoryId});
 
     return (
-        <div className="flex items-center gap-1 border px-3 py-1 rounded-full">
-            <img className="h-4 " src={category?.imageURL} alt="" />
-            <h4 className="text-xs font-semibold">{category?.name}</h4>
+      <Link href={`/categories/${categoryId}`}>
+        <div className="flex items-center gap-1 border px-3 py-1 rounded-full"
+        >
+          <img className="h-4 " src={category?.imageURL} alt="" />
+          <h4 className="text-xs font-semibold">{category?.name}</h4>
         </div>
-    )
+      </Link>
+    );
 }
 
 async function Brand({ brandId }) {

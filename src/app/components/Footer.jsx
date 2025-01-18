@@ -24,7 +24,7 @@ export default function Footer() {
       </div>
       <div className="flex justify-center w-full">
         <h3 className="text-xs text-gray-700">
-          © 2024 . All rights reserved by Harsh KV.
+          © {new Date().getFullYear()} . All rights reserved by Harsh KV.
         </h3>
       </div>
     </footer>

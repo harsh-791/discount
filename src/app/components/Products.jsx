@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function ProductsGridView({ products }) {
     return (
       <section className="w-full flex justify-center">
-        <div className="flex flex-col gsp-5 max-w-[900px] p-5">
+        <div className="flex flex-col gap-5 max-w-[900px] p-5">
           <h1 className="text-center font-semibold text-lg">Products</h1>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
             {products.map((item) => {
@@ -18,7 +18,7 @@ export default function ProductsGridView({ products }) {
     );
 }
 
-function ProductCard({ product }) {
+export function ProductCard({ product }) {
     return (
       <div className="flex flex-col gap-3 border p-4 rounded-lg">
         <div className="relative w-full">
