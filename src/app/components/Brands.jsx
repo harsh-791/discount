@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Slider from "react-slick";
 
 export default function Brands({ brands }) {
@@ -52,13 +53,15 @@ export default function Brands({ brands }) {
           return (
             <div key={brand.id} className="px-2">
               <div className="flex flex-col gap-2 items-center justify-center">
-                <div className="h-20 rounded-lg md:p-5 p-2 border overflow-hidden">
-                  <img
-                    className="h-full w-full object-cover"
-                    src={brand?.imageURL}
-                    alt=""
-                  />
-                </div>
+                <Link href={`/brands/${brand.id}`}>
+                  <div className="h-20 rounded-lg md:p-5 p-2 border overflow-hidden">
+                    <img
+                      className="h-full w-full object-cover"
+                      src={brand?.imageURL}
+                      alt=""
+                    />
+                  </div>
+                </Link>
               </div>
             </div>
           );

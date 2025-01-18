@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from "@nextui-org/react";
+import Link from "next/link";
 import Slider from "react-slick";
 
 export default function Collections({ collections }) {
@@ -71,9 +72,11 @@ export default function Collections({ collections }) {
                     </h1>
                   </div>
                   <div className="flex gap-4">
-                    <Button className="bg-blue-500 text-white text-xs md:text-sm ">
-                      SHOP NOW
-                    </Button>
+                    <Link href={`/collections/${collection?.id}`}>
+                      <button className="bg-blue-500 text-white text-xs md:text-sm px-4 py-2 rounded-lg">
+                        SHOP NOW
+                      </button>
+                    </Link>
                   </div>
                 </div>
                 <div className="w-full">

@@ -58,3 +58,23 @@ export const getProductsByCategory = async ({ categoryId }) => {
     };
   });
 };
+
+export const getProductsByBrand = async ({ brandId }) => {
+  const list = await getDocs(
+    query(
+      collection(db, "products"),
+      orderBy("timestampCreate", "desc"),
+      where("brandId", "==", brandId)
+    )
+  );
+  return list.docs.map((snap) => {
+    const data = snap.data();
+    return {
+      ...data,
+      timestampCreate: data.timestampCreate.toDate().toISOString(), // Convert to ISO string
+      timestampUpdate: data.timestampUpdate
+        ? data.timestampUpdate.toDate().toISOString()
+        : null, // Convert to ISO string if exists
+    };
+  });
+};
