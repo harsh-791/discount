@@ -3,6 +3,7 @@ import Image from "next/image"
 import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 import AuthContextProvider from "@/contexts/AuthContext";
+import HeaderClientButtons from "./HeaderClientButtons";
 export const Header = () => {
 
     const menuList = [
@@ -43,22 +44,9 @@ export const Header = () => {
               <Search size={14} />
             </button>
           </Link>
-          <Link href={"/favorites"}>
-            <button
-              title="Favorites"
-              className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-50"
-            >
-              <Heart size={14} />
-            </button>
-          </Link>
-          <Link href={"/cart"}>
-            <button
-              title="Cart"
-              className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-50"
-            >
-              <ShoppingCart size={14} />
-            </button>
-          </Link>
+          <AuthContextProvider>
+            <HeaderClientButtons />
+          </AuthContextProvider>
           <Link href={"/account"}>
             <button
               title="Account"

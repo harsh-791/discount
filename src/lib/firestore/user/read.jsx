@@ -6,7 +6,7 @@ import useSWRSubscription from "swr/subscription";
 
 export function useUser({uid}) {
   const { data, error } = useSWRSubscription(
-    ["user", uid],
+    ["users", uid],
     ([path, uid], { next }) => {
       const ref = doc(db, `users/${uid}`);
       const unsub = onSnapshot(

@@ -2,7 +2,7 @@
 
 import AuthContextProvider, { useAuth } from "@/contexts/AuthContext";
 import Footer from "../components/Footer";
-import Header from "../components/Header";
+import {Header} from "../components/Header";
 import { CircularProgress } from "@nextui-org/react";
 import Link from "next/link";
 
@@ -20,7 +20,7 @@ export default function Layout({ children }) {
     );
 }
 
-function UserChecking() {
+function UserChecking({children}) {
     const { user, isLoading } = useAuth();
     if(isLoading) {
         return (
