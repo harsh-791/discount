@@ -6,7 +6,6 @@ import { useUser } from "@/lib/firestore/user/read";
 import { updateCarts } from "@/lib/firestore/user/write";
 import { Button, CircularProgress } from "@nextui-org/react";
 import { Minus, Plus, X } from "lucide-react";
-import { parse } from "next/dist/build/swc/generated-native";
 import Link from "next/link";
 import { useState } from "react";
 
