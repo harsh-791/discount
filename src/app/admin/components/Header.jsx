@@ -6,7 +6,7 @@ import { Avatar } from "@nextui-org/react";
 import { Menu } from "lucide-react";
 
 export default function Header({ toggleSidebar }) {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const { data: admin } = useAdmin({email: user.email}); 
 
   return (
