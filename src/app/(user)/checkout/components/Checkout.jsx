@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from "@/contexts/AuthContext";
-import { createCheckoutAndGetURL } from "@/lib/firestore/checkout/write";
+import { createCheckoutAndGetURL, createCheckoutCODAndGetId } from "@/lib/firestore/checkout/write";
 import { Button } from "@nextui-org/react";
 import confetti from "canvas-confetti";
 import {  CheckSquare2Icon, Square } from "lucide-react";
@@ -51,11 +51,16 @@ export default function Checkout({ productList }) {
 
       } else {
         // Call API TO Create Order with COD
+        const checkoutId = await createCheckoutCODAndGetId({
+          uid: user?.uid,
+          products: productList,
+          address: address,
+        });
+        router.push(`/checkout-cod?checkout_id=${checkoutId}`);
       }
 
-      // toast.success("Successfully Placed!");
-      // confetti()
-      // router.push('/account')
+      toast.success("Successfully Placed!");
+      confetti()
     } catch (error) {
       toast.error(error?.message);
     }
