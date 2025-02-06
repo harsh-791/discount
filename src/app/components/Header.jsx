@@ -4,6 +4,7 @@ import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 import AuthContextProvider from "@/contexts/AuthContext";
 import HeaderClientButtons from "./HeaderClientButtons";
+import AdminButton from "./AdminButton";
 export const Header = () => {
 
     const menuList = [
@@ -35,7 +36,10 @@ export const Header = () => {
             </Link>
           ))}
         </div>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 justify-center">
+          <AuthContextProvider>
+            <AdminButton />
+          </AuthContextProvider>
           <Link href={"/search"}>
             <button
               title="Search"
