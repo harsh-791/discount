@@ -1,13 +1,10 @@
 "use client";
 
 import { useAllOrders } from "@/lib/firestore/orders/read";
-import { deleteProduct } from "@/lib/firestore/products/write";
-import { Button, CircularProgress } from "@nextui-org/react";
-import { Edit2, Trash2 } from "lucide-react";
+import { useUser } from "@/lib/firestore/user/read";
+import { Avatar, Button, CircularProgress } from "@nextui-org/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 export default function ListView() {
   const [pageLimit, setPageLimit] = useState(10);
@@ -132,6 +129,7 @@ function Row({ item, index }) {
   const totalAmount = item?.checkout?.line_items?.reduce((prev, curr) => {
     return prev + (curr?.price_data?.unit_amount / 100) * curr?.quantity;
   }, 0);
+  const { data: user } = useUser({ uid: item?.uid });
 
   return (
     <tr>
@@ -139,7 +137,13 @@ function Row({ item, index }) {
         {index + 1}
       </td>
       <td className="border-y bg-white px-3 py-2 whitespace-nowrap">
-        {item?.uid}{" "}
+        <div className="flex gap-2 items-center">
+          <Avatar size="sm" src={user?.photoURL} />
+          <div className="flex flex-col">
+            <h1>{user?.displayName}</h1>
+            <h1 className="text-xs text-gray-600">{user?.email}</h1>
+          </div>
+        </div>
       </td>
       <td className="border-y bg-white px-3 py-2  whitespace-nowrap">
         ₹ {totalAmount}
@@ -165,8 +169,8 @@ function Row({ item, index }) {
         <div className="flex">
           <Link href={`/admin/orders/${item?.id}`}>
             <button className="bg-black text-white px-3 py-2 rounded-lg text-xs">
-            View
-          </button>
+              View
+            </button>
           </Link>
         </div>
       </td>
