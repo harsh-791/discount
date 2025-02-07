@@ -2,8 +2,9 @@
 
 import { useAuth } from "@/contexts/AuthContext";
 import { auth } from "@/lib/firebase";
+import { createUser } from "@/lib/firestore/user/write";
 import { Button } from "@nextui-org/react";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -11,7 +12,28 @@ import toast from "react-hot-toast";
 
 const Page = () => {
   const { user } = useAuth();
-  const router = useRouter(); 
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState({});
+
+  const handleData = (key, value) => {
+    setData({
+      ...data,
+      [key]: value,
+    });
+  };
+
+  const handleLogin = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithEmailAndPassword(auth, data?.email, data?.password);
+      toast.success("Successfully Logged-In!!");
+    } catch (error) {
+      toast.error(error?.message);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     if (user) {
       router.push("/account");
@@ -23,24 +45,38 @@ const Page = () => {
           <div className="flex justify-center">
             <img className="h-12" src="/logo.png" alt="Logo" />
           </div>
-          <div className="flex flex-col gap-3 bg-white md:p-10 p-5 rounded-xl md:min-w-[440px] w-full" >
+          <div className="flex flex-col gap-3 bg-white md:p-10 p-5 rounded-xl md:min-w-[440px] w-full">
             <h1 className="font-bold text-xl">Login with Email</h1>
-            <form className="flex flex-col gap-3">
+            <form onSubmit={(e) => {
+              e.preventDefault();
+              handleLogin();
+            }} className="flex flex-col gap-3">
               <input
-                placeholder="Enter your email"
+                placeholder="Enter Your Email"
                 type="email"
                 name="user-email"
                 id="user-email"
+                value={data?.email}
+                onChange={(e) => handleData("email", e.target.value)}
                 className="px-3 py-2 rounded-xl border focus:outline-none w-full"
               />
               <input
-                placeholder="Enter your password"
+                placeholder="Enter Your Password"
                 type="password"
                 name="user-password"
                 id="user-password"
+                value={data?.password}
+                onChange={(e) => handleData("password", e.target.value)}
                 className="px-3 py-2 rounded-xl border focus:outline-none w-full"
               />
-              <Button color="primary">Login</Button>
+              <Button
+                isLoading={isLoading}
+                isDisabled={isLoading}
+                type="submit"
+                color="primary"
+              >
+                Login
+              </Button>
             </form>
             <div className="flex justify-between">
               <Link href={"/sign-up"}>
