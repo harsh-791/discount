@@ -9,6 +9,7 @@ import ProductsGridView from "./components/Products";
 import CustomerReviews from "./components/CustomReviews";
 import { getBrands } from "@/lib/firestore/brands/read_server";
 import Brands from "./components/Brands";
+import Footer from "./components/Footer";
 
 export default async function Home() {
   const[featuredProducts, collections, categories, products, brands] = await Promise.all([
@@ -33,6 +34,7 @@ export default async function Home() {
       <ProductsGridView products={products} />
       <CustomerReviews />
       <Brands brands={brands}/> 
+      <Footer />
     </main>
   );
 }
