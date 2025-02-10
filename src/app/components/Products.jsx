@@ -3,6 +3,8 @@ import Link from "next/link";
 import FavoriteButton from "./FavoriteButton";
 import AuthContextProvider from "@/contexts/AuthContext";
 import AddToCartButton from "./AddToCartButton";
+import { getProductReviewCounts } from "@/lib/firestore/products/count/read";
+import { Suspense } from "react";
 
 export default function ProductsGridView({ products }) {
     return (
@@ -50,29 +52,54 @@ export function ProductCard({ product }) {
         <p className="text-xs text-gray-500 line-clamp-2">
           {product?.shortDescription}
         </p>
-        <div className="flex gap-3 items-center">
-          <Rating
-            size="small"
-            name="product-rating"
-            defaultValue={2.5}
-            precision={0.5}
-            readOnly
-          />
-          <h1 className="text-xs text-gray-400">(0)</h1>
-        </div>
+        <Suspense>
+          <RatingReview product={product} />
+        </Suspense>
+        {product?.stock <= (product?.orders ?? 0) && (
+          <div className="flex">
+            <h3 className="text-red-500 rounded-lg text-xs font-semibold">
+              Out of Stock
+            </h3>
+          </div>
+        )}
         <div className="flex items-center gap-4 w-full">
           <div className="w-full">
             <Link href={`/checkout?type=buynow&productId=${product?.id}`}>
-              <button className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg w-full">
+              <button
+                className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg w-full"
+                disabled={product?.stock <= (product?.orders ?? 0)}
+              >
                 Buy Now
               </button>
             </Link>
           </div>
 
           <AuthContextProvider>
-            <AddToCartButton productId={product?.id} />
+            <AddToCartButton
+              productId={product?.id}
+              disabled={product?.stock <= (product?.orders ?? 0)}
+            />
           </AuthContextProvider>
         </div>
       </div>
     );
+}
+
+async function RatingReview({ product }) {
+  const counts = await getProductReviewCounts({ productId: product?.id });
+  return (
+    <div className="flex gap-3 items-center">
+      <Rating
+        size="small"
+        name="product-rating"
+        defaultValue={counts?.averageRating ?? 0}
+        precision={0.5}
+        readOnly
+      />
+      <h1 className="text-xs text-gray-400">
+        <span>{counts?.averageRating?.toFixed(1)}</span> ({counts?.totalReviews}
+        )
+      </h1>
+    </div>
+  );
 }

@@ -40,7 +40,7 @@ export default function Reviews({ productId }) {
       <div className="flex flex-col gap-4">
         {data?.map((item) => {
           return (
-            <div key={item?.id} className="flex gap-3">
+            <div key={item?.uid || item?.timestamp} className="flex gap-3">
               <div className="">
                 <Avatar src={item?.photoURL} />
               </div>

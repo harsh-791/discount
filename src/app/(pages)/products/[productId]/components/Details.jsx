@@ -1,8 +1,12 @@
+import AddToCartButton from "@/app/components/AddToCartButton";
+import FavoriteButton from "@/app/components/FavoriteButton";
+import AuthContextProvider from "@/contexts/AuthContext";
 import { getBrand } from "@/lib/firestore/brands/read_server";
 import { getCategory } from "@/lib/firestore/categories/read_server";
-import { Button } from "@nextui-org/react";
-import { Heart } from "lucide-react";
+import { getProductReviewCounts } from "@/lib/firestore/products/count/read";
+import { Rating } from "@mui/material";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default function Details({product}) {
   return (
@@ -12,6 +16,9 @@ export default function Details({product}) {
         <Brand brandId={product?.brandId} />
       </div>
       <h1 className="font-semibold text-xl md:text-4xl">{product?.title}</h1>
+      <Suspense fallback="Failed to load">
+        <RatingReview product={product} />
+      </Suspense>
       <h2 className="text-gray-600 text-sm line-clamp-3 md:line-clamp-4">
         {product?.shortDescription}
       </h2>
@@ -22,21 +29,40 @@ export default function Details({product}) {
         </span>
       </h3>
       <div className="flex flex-wrap items-center gap-4">
-        <Button className="bg-black text-white">
-          Buy Now
-        </Button>
-        <Button variant="bordered" className="">
-          Add To Cart
-        </Button>
-        <Button variant="bordered" isIconOnly color="danger">
-            <Heart size={13} />
-        </Button>
+        <Link href={`/checkout?type=buynow&productId=${product?.id}`}>
+          <button
+            className="bg-black text-white rounded-lg px-4 py-1.5"
+            disabled={product?.stock <= (product?.orders ?? 0)}
+          >
+            Buy Now
+          </button>
+        </Link>
+        <AuthContextProvider>
+          <AddToCartButton
+            type={"cute"}
+            productId={product?.id}
+            disabled={product?.stock <= (product?.orders ?? 0)}
+          />
+        </AuthContextProvider>
+        <div className="absolute top-2 right-2">
+          <AuthContextProvider>
+            <FavoriteButton productId={product?.id} />
+          </AuthContextProvider>
+        </div>
       </div>
-      <div className="flex flex-col gap-2 py-6">
+      {product?.stock <= (product?.orders ?? 0) && (
+        <div className="flex">
+          <h3 className="text-red-500 py-1 rounded-lg text-sm font-semibold">
+            Out of Stock
+          </h3>
+        </div>
+      )}
+      <div className="flex flex-col gap-2 py-2">
         <h2 className="text-sm font-semibold">Description</h2>
         <div
-          className="text-gray-600" 
-          dangerouslySetInnerHTML={{ __html: product?.description ?? "" }}></div>
+          className="text-gray-600"
+          dangerouslySetInnerHTML={{ __html: product?.description ?? "" }}
+        ></div>
       </div>
     </div>
   );
@@ -65,4 +91,23 @@ async function Brand({ brandId }) {
       <h4 className="text-xs font-semibold">{brand?.name}</h4>
     </div>
   );
+}
+
+async function RatingReview({ product }) {
+  // console.log("product", product);
+  const counts = await getProductReviewCounts({ productId: product?.id });
+  // console.log("counts", counts);
+  return (
+    <div className="flex gap-3 items-center">
+    <Rating
+      name="product-rating"
+      defaultValue={counts?.averageRating ?? 0}
+      precision={0.5}
+      readOnly
+    />
+    <h1 className="text-sm text-gray-400">
+      <span>{counts?.averageRating?.toFixed(1)}</span> ({counts?.totalReviews})
+    </h1>
+  </div>
+  )
 }
