@@ -12,12 +12,24 @@ export default function HeaderClientButtons() {
 
   return (
     <div className="flex items-center gap-1">
-      <Badge
-        variant="solid"
-        size="sm"
-        className="text-white bg-red-400 text-[8px]"
-        content={data?.favorites?.length ?? 0}
-      >
+      {(data?.favorites?.length ?? 0) != 0 && (
+        <Badge
+          variant="solid"
+          size="sm"
+          className="text-white bg-red-400 text-[8px]"
+          content={data?.favorites?.length ?? 0}
+        >
+          <Link href={"/favorites"}>
+            <button
+              title="Favorites"
+              className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-50"
+            >
+              <Heart size={14} />
+            </button>
+          </Link>
+        </Badge>
+      )}
+      {(data?.favorites?.length ?? 0) === 0 && (
         <Link href={"/favorites"}>
           <button
             title="Favorites"
@@ -26,13 +38,25 @@ export default function HeaderClientButtons() {
             <Heart size={14} />
           </button>
         </Link>
-      </Badge>
-      <Badge
-        variant="solid"
-        size="sm"
-        className="text-white bg-red-400 text-[8px]"
-        content={data?.carts?.length ?? 0}
-      >
+      )}
+      {(data?.carts?.length ?? 0) != 0 && (
+        <Badge
+          variant="solid"
+          size="sm"
+          className="text-white bg-red-400 text-[8px]"
+          content={data?.carts?.length ?? 0}
+        >
+          <Link href={"/cart"}>
+            <button
+              title="Cart"
+              className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-50"
+            >
+              <ShoppingCart size={14} />
+            </button>
+          </Link>
+        </Badge>
+      )}
+      {(data?.carts?.length ?? 0) === 0 && (
         <Link href={"/cart"}>
           <button
             title="Cart"
@@ -41,7 +65,7 @@ export default function HeaderClientButtons() {
             <ShoppingCart size={14} />
           </button>
         </Link>
-      </Badge>
+      )}
     </div>
   );
 }
