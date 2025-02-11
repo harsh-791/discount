@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# discount
 
-## Getting Started
+This is a Full Stack E-Commerce Website built with **Next.js 14**, **Tailwind CSS**, **Firebase**, **Stripe**, and **Algolia**.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- User authentication with Firebase
+- Product browsing and searching with Algolia
+- Shopping cart functionality
+- Secure payment processing with Stripe
+- Admin panel for managing products, orders, and users
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Technologies Used
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js 14, Tailwind CSS
+- **Backend**: Firebase (Firestore, Authentication)
+- **Payment**: Stripe
+- **Search**: Algolia
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Installation
 
-## Learn More
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. Navigate to the project directory:
+   ```bash
+   cd <project-directory>
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Create a `.env.local` file in the root directory and add the following:
 
-## Deploy on Vercel
+   ```plaintext
+   NEXT_PUBLIC_FIREBASE_API_KEY=""
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=""
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=""
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=""
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=""
+   NEXT_PUBLIC_FIREBASE_APP_ID=""
+   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=""
+   
+   NEXT_PUBLIC_DOMAIN=""
+   
+   NEXT_PUBLIC_ALGOLIA_APP_ID=""
+   NEXT_PUBLIC_ALGOLIA_APP_KEY=""
+   
+   NEXT_PUBLIC_FIREBASE_SERVICE_ACCOUNT_KEYS='{}'
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+5. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Demo
+
+You can explore the demo of the e-commerce website at [this link](https://discount-store.vercel.app/). 
+
+To access the Admin Panel, use the following credentials:
+
+- **Email**: admin@gmail.com
+- **Password**: demoUser
+
+(Note: This demo admin account has read and write permissions disabled for security purposes.)
